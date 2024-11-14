@@ -1,0 +1,70 @@
+/* kyc.module.css */
+.container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .progressContainer {
+    margin: 20px 0;
+    position: relative;
+  }
+  
+  .progressBar {
+    width: 90%;
+    height: 10px;
+    background-color: #4caf50;
+    border-radius: 5px;
+    margin: 0 auto;
+  }
+  
+  .progressText {
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #555;
+  }
+  
+  .rewardContainer {
+    margin: 20px 0;
+  }
+  
+  .rewardText {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .rewardText strong {
+    color: #d32f2f;
+  }
+  
+  .nextButton {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .nextButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .nextButton:disabled {
+    background-color: #c0c0c0;
+    cursor: not-allowed;
+  }
+  
