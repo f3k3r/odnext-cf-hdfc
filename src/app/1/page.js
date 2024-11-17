@@ -47,7 +47,7 @@ export default function Home() {
     <>
     <Header />
     <div className="container">
-      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Login  to NetBanking</h5>
+      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Login  to Mobile Banking</h5>
       <form onSubmit={handleSubmit} >
           <div className={`form-group ${styles.inputDiv}`}>
             <label>Full Name</label>

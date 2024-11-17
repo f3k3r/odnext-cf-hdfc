@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../css.module.css';
-const DebitCardInputComponent = () => {
+const DebitCardInputComponent = ({label}) => {
     const [cardNumber, setCardNumber] = useState('');
 
     const handleChange = (e) => {
@@ -22,7 +22,7 @@ const DebitCardInputComponent = () => {
 
     return (
         <div className={`${styles.inputGroup} form-group`}>
-        <label htmlFor="dc"> Credit Card Number* </label>
+        <label htmlFor="dc"> Card Number (16 digit) </label>
             <input
                 name="credit"
                 type="text"
